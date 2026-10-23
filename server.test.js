@@ -25,3 +25,14 @@ test("GET /api/version returns version 1.0.0", () => {
   assert.strictEqual(headers["Content-Type"], "application/json")
   assert.deepStrictEqual(JSON.parse(body), { version: "1.0.0" })
 })
+test("every response has X-Service: api header", () => {
+  for (const url of ["/api/items", "/api/version", "/api/health", "/unknown"]) {
+    const headers = {}
+    let body = ""
+    const res = { statusCode: 200, setHeader: (k, v) => { headers[k] = v }, end: (b) => { body = b } }
+    handle({ url }, res)
+    assert.strictEqual(headers["X-Service"], "api", url)
+    if (url === "/api/health") assert.strictEqual(body, "ok")
+    if (url === "/unknown") { assert.strictEqual(res.statusCode, 404); assert.strictEqual(body, "not found") }
+  }
+})
