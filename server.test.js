@@ -16,14 +16,14 @@ test("GET /api/items returns price for each item", () => {
   assert.strictEqual(data.find((x) => x.id === 1).price, 100)
   assert.strictEqual(data.find((x) => x.id === 2).price, 250)
 })
-test("GET /api/version returns version 1.0.0", () => {
+test("GET /api/version returns version 1.1.0", () => {
   const headers = {}
   let body = ""
   const res = { statusCode: 200, setHeader: (k, v) => { headers[k] = v }, end: (b) => { body = b } }
   handle({ url: "/api/version" }, res)
   assert.strictEqual(res.statusCode, 200)
   assert.strictEqual(headers["Content-Type"], "application/json")
-  assert.deepStrictEqual(JSON.parse(body), { version: "1.0.0" })
+  assert.deepStrictEqual(JSON.parse(body), { version: "1.1.0" })
 })
 test("every response has X-Service: api header", () => {
   for (const url of ["/api/items", "/api/version", "/api/health", "/unknown"]) {
