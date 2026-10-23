@@ -4,6 +4,7 @@ export const items = [{ id: 1, title: "Первая запись", price: 100 },
 export function handle(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*")
   if (req.url === "/api/items") { res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(items)); return }
+  if (req.url === "/api/version") { res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify({ version: "1.0.0" })); return }
   if (req.url === "/api/health") { res.end("ok"); return }
   res.statusCode = 404; res.end("not found")
 }
