@@ -1,6 +1,6 @@
 import http from "node:http"
 const port = Number(process.env.PORT || 3001)
-export const items = [{ id: 1, title: "Первая запись" }, { id: 2, title: "Вторая запись" }]
+export const items = [{ id: 1, title: "Первая запись", price: 100 }, { id: 2, title: "Вторая запись", price: 250 }]
 export function handle(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*")
   if (req.url === "/api/items") { res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(items)); return }
